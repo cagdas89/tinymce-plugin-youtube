@@ -83,8 +83,8 @@
         options += "?rel=0";
         // Disable 'Show video title and player actions'
         options += "&showinfo=0";
-        
-        options += "&modestbranding=1";
+        // Disable annotations
+        options += "&iv_load_policy=3";
 
         //SELECT Include related videos
         if (youtubeControls) {
