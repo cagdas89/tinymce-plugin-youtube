@@ -8,6 +8,17 @@ var gulp = require("gulp"),
     zip = require("gulp-zip");
 
 /**
+ * minify youtube js
+ */
+gulp.task("youtube-js", function () {
+    return gulp
+        .src("js/src/youtube.js")
+        .pipe(uglify({preserveComments: "some"}))
+        .pipe(rename("youtube.min.js"))
+        .pipe(gulp.dest("js/"));
+});
+
+/**
  * Remove dist directory
  */
 gulp.task("clean", function () {
@@ -15,9 +26,9 @@ gulp.task("clean", function () {
 });
 
 /**
- * concat and minimy js
+ * concat and minify js
  */
-gulp.task("js", function () {
+gulp.task("js", ["youtube-js"], function () {
     return gulp
         .src(["js/vendor/**/*", "!js/vendor/jquery.js", "js/*"])
         .pipe(concat("main.js"))

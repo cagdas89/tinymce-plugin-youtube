@@ -60,7 +60,7 @@
         var dim;
         if (data) {
             dim = 'width="' + width + '" height="' + height + '"';
-            return '<iframe src="' + data + '" ' + dim + ' frameborder="0" allowfullscreen class="embed-responsive-item">&nbsp;</iframe>';
+            return '<div class="youtube-container"><iframe class="embed-responsive-item" ' + dim + ' src="' + data + '" frameborder="0" allowfullscreen>&nbsp;</iframe></div>';
         }
     }
 
@@ -72,29 +72,39 @@
         var result,
             options = "",
             youtubeAutoplay = $("#youtubeAutoplay").is(":checked"),
-            youtubeREL = $("#youtubeREL").is(":checked"),
-            youtubeHD = $("#youtubeHD").is(":checked"),
+            youtubeControls = $("#youtubeControls").is(":checked"),
+            // youtubeHD = $("#youtubeHD").is(":checked"),
             width = $("#youtubeWidth").val(),
             height = $("#youtubeHeight").val(),
             newYouTubeUrl = convertUrl($('#youtubeID').val());
 
+        // Disable default rel option
+        // 'Show suggested videos when the video finishes'
+        options += "?rel=0";
+        // Disable 'Show video title and player actions'
+        options += "&showinfo=0";
+        
+        options += "&modestbranding=1";
+
         //SELECT Include related videos
-        if (youtubeREL) {
-            options += "?rel=1";
-        }else{
-            options += "?rel=0";
+        if (youtubeControls) {
+            options += "&controls=1";
+        } else {
+            options += "&controls=0";
         }
 
         //SELECT Watch in HD
-        if (youtubeHD) {
-            options += "&hd=1";
-        }else{
-            options += "&hd=0";
-        }
+        // if (youtubeHD) {
+        //     options += "&hd=1";
+        // } else {
+        //     options += "&hd=0";
+        // }
+
         // Youtube Autoplay
         if (youtubeAutoplay) {
             options += "&autoplay=1";
         }
+
         if (newYouTubeUrl) {
             // Insert the contents from the input into the document
             //result = dataToHtml(html5State, width, height, newYouTubeUrl + (html5State ? "" : options));
@@ -155,6 +165,7 @@
             youtubeAutoplay: parent.tinymce.util.I18n.translate("autoplay"),
             youtubeHD: parent.tinymce.util.I18n.translate("HD video"),
             youtubeREL: parent.tinymce.util.I18n.translate("Related video"),
+            youtubeControls: parent.tinymce.util.I18n.translate("Player Controls"),
             cancel: parent.tinymce.util.I18n.translate("cancel"),
             Insert: parent.tinymce.util.I18n.translate("Insert")
         };
